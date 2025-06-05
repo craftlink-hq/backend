@@ -9,7 +9,6 @@ export const createGig = async (req: Request, res: Response, next: NextFunction)
     const {
       clientAddress,
       title,
-      clientDescription,
       skillCategory,
       preferredLocation,
       experienceLevel,
@@ -28,7 +27,6 @@ export const createGig = async (req: Request, res: Response, next: NextFunction)
     const gig = new Gig({
       id: databaseId,
       clientAddress,
-      clientDescription,
       title,
       skillCategory,
       preferredLocation,

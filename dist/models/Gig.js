@@ -9,12 +9,6 @@ const gigSchema = new Schema({
         type: String,
         required: true
     },
-    clientDescription: {
-        type: String
-    },
-    clientAvatar: {
-        type: String
-    },
     title: {
         type: String,
         required: true

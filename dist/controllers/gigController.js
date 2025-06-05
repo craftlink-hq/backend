@@ -3,14 +3,13 @@ import { generateId } from '../utils/idGenerator.js';
 import { createMerkleTree, deserializeProof, getProof, serializeProof, verifyMerkleProof } from '../utils/merkleTreeUtils.js';
 export const createGig = async (req, res, next) => {
     try {
-        const { clientAddress, title, clientDescription, skillCategory, preferredLocation, experienceLevel, projectDescription, contextLink, files, additionalProjectInfo, projectDuration, price } = req.body;
+        const { clientAddress, title, skillCategory, preferredLocation, experienceLevel, projectDescription, contextLink, files, additionalProjectInfo, projectDuration, price } = req.body;
         // Generate unique gig ID
         const databaseId = generateId(clientAddress, title, projectDescription);
         // Create gig object
         const gig = new Gig({
             id: databaseId,
             clientAddress,
-            clientDescription,
             title,
             skillCategory,
             preferredLocation,

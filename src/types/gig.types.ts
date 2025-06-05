@@ -3,8 +3,6 @@ import { Request } from "express";
 export interface IGig {
   id: string;
   clientAddress: string;
-  clientDescription?: string;
-  clientAvatar?: string;
   title: string;
   skillCategory: string[];
   preferredLocation: string;

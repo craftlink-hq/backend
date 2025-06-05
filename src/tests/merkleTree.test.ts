@@ -18,7 +18,6 @@ describe('Merkle Tree Utilities', () => {
       status: 'CREATED',
       createdAt: new Date(),
       merkleProof: [],
-      clientDescription: 'Client looking for web design',
     },
     {
       id: '2',
