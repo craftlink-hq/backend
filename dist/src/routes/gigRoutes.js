@@ -1,10 +1,12 @@
 import express from 'express';
-import { createGig, getAllGigs, getGig } from '../controllers/gigController.js';
+import { createGig, stageGig, confirmGig, getAllGigs, getGig } from '../controllers/gigController.js';
 import { validateGigCreation } from '../middlewares/validationMiddleware.js';
 const router = express.Router();
-router.post('/gigs', validateGigCreation, createGig);
+router.post('/gigs/stage', validateGigCreation, stageGig);
+router.post('/gigs/confirm', validateGigCreation, confirmGig);
 router.get('/gigs/:databaseId', getGig);
 router.get('/gigs', getAllGigs);
+router.post('/gigs', validateGigCreation, createGig); // Deprecated endpoint
 // Get all gigs
 // fetch('/api/gigs')
 // // With pagination

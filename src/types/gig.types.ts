@@ -33,3 +33,9 @@ export interface GigCreationRequest extends Request {
     'merkleRoot'
   >;
 }
+
+export interface ConfirmGigRequest extends IGig {
+  databaseId: string;
+  merkleRoot: string;
+  merkleProof: string[];
+}
