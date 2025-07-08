@@ -104,6 +104,7 @@ export const confirmGig = async (req, res, next) => {
             merkleRoot,
             merkleProof,
         });
+        // Save gig to database
         await gig.save();
         res.status(201).json({
             databaseId,
@@ -139,7 +140,6 @@ export const createGig = async (req, res, next) => {
         await gig.save();
         // Create Merkle Tree for all gigs with type specification
         const allGigs = await Gig.find().lean();
-        // console.log("All Gigs", allGigs);
         const { tree, root } = createMerkleTree(allGigs, 'gig');
         // Generate Merkle proof with type
         const proof = getProof(gig.toObject(), tree, 'gig');
