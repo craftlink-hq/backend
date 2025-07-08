@@ -27,11 +27,9 @@ export const stageGig = async (req: GigCreationRequest, res: Response, next: Nex
     } = req.body;
 
     // Generate unique gig ID
-    console.log("Generating gig ID...");
     const databaseId = generateId(clientAddress, title, projectDescription);
 
     // Create staged gig object explicitly typed as IGig
-    console.log("Creating staged gig object...");
     const stagedGig: IGig = {
       id: databaseId,
       clientAddress,
@@ -51,7 +49,6 @@ export const stageGig = async (req: GigCreationRequest, res: Response, next: Nex
       merkleRoot: undefined,
     };
 
-    console.log("Staged gig created:", stagedGig);
     const allGigs: IGig[] = await Gig.find().lean();
     const gigsForMerkle: IGig[] = [...allGigs, stagedGig];
 
@@ -61,8 +58,6 @@ export const stageGig = async (req: GigCreationRequest, res: Response, next: Nex
     // Generate Merkle proof
     const proof = getProof(stagedGig, tree, 'gig');
     const serializedProof = serializeProof(proof);
-
-    console.log("Merkle proof generated:", serializedProof);
 
     res.status(200).json({
       databaseId,
@@ -99,7 +94,6 @@ export const confirmGig = async (req: Request<{}, {}, ConfirmGigRequest>, res: R
     // const contract = getGigContract(provider);
 
     // Verify blockchain transaction
-    console.log("Verifying gig on blockchain...");
     const contract = getGigContract(readOnlyProvider);
     const gigInfo = await contract.getGigInfo(databaseId);
     if (gigInfo.client.toLowerCase() !== clientAddress.toLowerCase()) {
@@ -108,7 +102,6 @@ export const confirmGig = async (req: Request<{}, {}, ConfirmGigRequest>, res: R
     }
 
     // Verify Merkle proof against provided merkleRoot
-    console.log("Verifying Merkle proof...");
     const gigData: IGig = {
       id: databaseId,
       clientAddress,
@@ -133,8 +126,6 @@ export const confirmGig = async (req: Request<{}, {}, ConfirmGigRequest>, res: R
       return;
     }
 
-    console.log("Merkle proof verified successfully");
-
     // Create and save gig with provided merkleRoot and merkleProof
     const gig = new Gig({
       id: databaseId,
@@ -154,11 +145,9 @@ export const confirmGig = async (req: Request<{}, {}, ConfirmGigRequest>, res: R
       merkleRoot,
       merkleProof,
     });
-
-    console.log("Saving gig to database...");
+    // Save gig to database
     await gig.save();
 
-    console.log("Gig saved successfully");
     res.status(201).json({
       databaseId,
       merkleRoot,
@@ -209,7 +198,7 @@ export const createGig = async (req: Request, res: Response, next: NextFunction)
 
     // Create Merkle Tree for all gigs with type specification
     const allGigs = await Gig.find().lean();
-    // console.log("All Gigs", allGigs);
+
     const { tree, root } = createMerkleTree(allGigs, 'gig');
 
     // Generate Merkle proof with type
