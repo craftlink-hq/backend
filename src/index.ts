@@ -12,7 +12,14 @@ dotenv.config();
 
 const app: Express = express();
 
-const allowedOrigins = ["http://localhost:3000", "https://craftlink-hq.vercel.app", "https://craftlink-alpha.vercel.app", "https://craftlinkhq.com", "https://www.craftlinkhq.com"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://craftlink-hq.vercel.app",
+  "https://craftlink-alpha.vercel.app",
+  "https://craftlinkhq.com",
+  "https://www.craftlinkhq.com",
+  "https://embedded-wallet.thirdweb.com",
+];
 app.use(
   cors({ origin: allowedOrigins, credentials: true }) //allowedHeaders: ["*"]
 );
